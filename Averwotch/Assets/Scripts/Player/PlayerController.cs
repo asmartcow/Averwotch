@@ -8,6 +8,13 @@ namespace Averwotch.Player.Controller
     public class PlayerController : MonoBehaviour
     {
         //Displayed Variables\\
+        [Header("Player Controls")]
+        [ShowOnly] public KeyCode pc_forward;
+        [ShowOnly] public KeyCode pc_backward;
+        [ShowOnly] public KeyCode pc_left;
+        [ShowOnly] public KeyCode pc_right;
+        
+        [Space]
         [Header("Player Movement")]
         [ShowOnly] public Vector3 p_moveVelocity;
         [ShowOnly] public bool p_isGrounded;
@@ -54,6 +61,10 @@ namespace Averwotch.Player.Controller
             c_main = PlayerSettings._playerCamera;
             c_speed = PlayerSettings._cameraSpeed;
             c_lookAt = PlayerSettings._playerForward;
+            pc_forward = PlayerSettings._forwardMove;
+            pc_backward = PlayerSettings._backwardMove;
+            pc_left = PlayerSettings._leftMove;
+            pc_right = PlayerSettings._rightMove;
 
             CheckGrounded();
             MovePlayer();
@@ -89,31 +100,21 @@ namespace Averwotch.Player.Controller
         private void MovePlayer()
         {
             Gravity();
+
             Vector3 targetPos = new Vector3(c_lookAt.transform.position.x, this.transform.position.y, c_lookAt.transform.position.z);
             this.transform.LookAt(targetPos);
+
             Vector3 movement = Vector3.zero;
-            //float vertical = Input.GetAxis("Vertical");
-            //float horizontal = Input.GetAxis("Horizontal");
 
             movement += transform.forward * Input.GetAxis("Vertical");
             movement += transform.right * Input.GetAxis("Horizontal");
 
-            //Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
-            //p_controller.Move(move * Time.deltaTime * p_speed);
-
             p_controller.Move(movement.normalized * Time.deltaTime * p_speed);
 
-            //p_moveVelocity = move * p_speed;
-            //PlayerSettings._moveX = p_moveVelocity.x;
-            //PlayerSettings._moveZ = p_moveVelocity.z;
             if (movement != Vector3.zero)
             {
-                transform.forward = movement;
+                transform.position = movement;
             }
-            /*if(move != Vector3.zero)
-            {
-                transform.forward = move;
-            }*/
 
             p_controller.Move(p_velocity * Time.deltaTime);
         }

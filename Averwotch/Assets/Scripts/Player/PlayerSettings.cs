@@ -7,6 +7,13 @@ namespace Averwotch.Player.Globals
     public class PlayerSettings : MonoBehaviour
     {
         //Local Public Variables\\
+        [Header("Player Controls Settings")]
+        public KeyCode forwardMove;
+        public KeyCode backwardMove;
+        public KeyCode leftMove;
+        public KeyCode rightMove;
+
+        [Space]
         [Header("Player Movement Settings")]
         public float playerSpeed;
         public float gravityConstant;
@@ -56,6 +63,11 @@ namespace Averwotch.Player.Globals
 
         public static LayerMask _groundMask { get; set; }
 
+        public static KeyCode _forwardMove { get; set; }
+        public static KeyCode _backwardMove { get; set; }
+        public static KeyCode _leftMove { get; set; }
+        public static KeyCode _rightMove { get; set; }
+
         public static GameObject _playerCamera { get; set; }
         public static GameObject _playerForward { get; set; }
         public static GameObject _isGroundedStart { get; set; }
@@ -79,6 +91,10 @@ namespace Averwotch.Player.Globals
             _isgroundedRayLength = isGroundedRaycastLength;
             moveX = _moveX;
             moveZ = _moveZ;
+            _forwardMove = forwardMove;
+            _backwardMove = backwardMove;
+            _leftMove = leftMove;
+            _rightMove = rightMove;
         }
     }
 }
