@@ -1,50 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace Averwotch.Player.Globals
 {
     public class PlayerSettings : MonoBehaviour
     {
         //Local Public Variables\\
-        [Header("Player Controls Settings")]
-        public KeyCode forwardMove;
-        public KeyCode backwardMove;
-        public KeyCode leftMove;
-        public KeyCode rightMove;
+        //Movement\\
+        [Title("Moving", "", TitleAlignments.Centered)]
+        [FoldoutGroup("Player Movement Settings", expanded: false)] public float playerSpeed;
+        [FoldoutGroup("Player Movement Settings", expanded: false)] public float gravityConstant;
+        [FoldoutGroup("Player Movement Settings", expanded: false)] public float isGroundedRaycastLength;
 
-        [Space]
-        [Header("Player Movement Settings")]
-        public float playerSpeed;
-        public float gravityConstant;
-        public float isGroundedRaycastLength;
-        public GameObject raycastStart;
+        //Jumping\\
+        [Title("Jumping", "", TitleAlignments.Centered)]
+        [FoldoutGroup("Player Movement Settings", expanded: false)] public bool canDoubleJump;
+        [FoldoutGroup("Player Movement Settings", expanded: false)] public int maxJumps;
+        [FoldoutGroup("Player Movement Settings", expanded: false)] public float jumpHeight;
+        [FoldoutGroup("Player Movement Settings", expanded: false)] public float smoothTime;
 
-        [Space]
-        [Header("Player Camera Settings")]
-        public float cameraSpeed;
-        public GameObject playerForwardLook;
+        //Movement object references\\
+        [Title("Object References", "", TitleAlignments.Centered)]
+        [FoldoutGroup("Player Movement Settings", expanded: false)] public GameObject raycastStart;
 
-        [Space]
-        [Header("Player Jump Settings")]
-        public bool canDoubleJump;
-        public int maxJumps;
+        //Camera\\
+        [Title("Variables", "", TitleAlignments.Centered)]
+        [FoldoutGroup("Player Camera settings", expanded: false)] public float cameraSpeed;
 
-        [Space]
-        [Header("Camera Settings")]
-        public float jumpHeight;
-        public float smoothTime;
-        public GameObject mainCamera;
-        public GameObject followObject;
+        //Camera Object References\\
+        [Title("Object References", "", TitleAlignments.Centered)]
+        [FoldoutGroup("Player Camera settings", expanded: false)] public GameObject playerForwardLook;
+        [FoldoutGroup("Player Camera settings", expanded: false)] public GameObject mainCamera;
+        [FoldoutGroup("Player Camera settings", expanded: false)] public GameObject followObject;
 
-        [Space]
-        [Header("Layer Masks")]
-        public LayerMask groundLayer;
+        //Layer Masks\\
+        [Title("Layer Mask", "", TitleAlignments.Centered)]
+        [FoldoutGroup("Layer Mask settings", expanded: false)] public LayerMask groundLayer;
 
-        [Space]
-        [Header("Animations")]
-        [ShowOnly] public float moveX;
-        [ShowOnly] public float moveZ;
+        //ShowOnly\\
+        [Title("Show Only", "", TitleAlignments.Centered)]
+        [FoldoutGroup("Animations", expanded: false)] [ShowOnly] public float moveX;
+        [FoldoutGroup("Animations", expanded: false)] [ShowOnly] public float moveZ;
         //-----------------\\
 
         //Set Global Usables\\
@@ -62,11 +60,6 @@ namespace Averwotch.Player.Globals
         public static bool _canDoubleJump { get; set; }
 
         public static LayerMask _groundMask { get; set; }
-
-        public static KeyCode _forwardMove { get; set; }
-        public static KeyCode _backwardMove { get; set; }
-        public static KeyCode _leftMove { get; set; }
-        public static KeyCode _rightMove { get; set; }
 
         public static GameObject _playerCamera { get; set; }
         public static GameObject _playerForward { get; set; }
@@ -91,10 +84,6 @@ namespace Averwotch.Player.Globals
             _isgroundedRayLength = isGroundedRaycastLength;
             moveX = _moveX;
             moveZ = _moveZ;
-            _forwardMove = forwardMove;
-            _backwardMove = backwardMove;
-            _leftMove = leftMove;
-            _rightMove = rightMove;
         }
     }
 }

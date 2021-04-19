@@ -2,34 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Averwotch.Player.Globals;
+using Sirenix.OdinInspector;
+using InControl;
 
 namespace Averwotch.Player.Controller
 {
     public class PlayerController : MonoBehaviour
     {
         //Displayed Variables\\
-        [Header("Player Controls")]
-        [ShowOnly] public KeyCode pc_forward;
-        [ShowOnly] public KeyCode pc_backward;
-        [ShowOnly] public KeyCode pc_left;
-        [ShowOnly] public KeyCode pc_right;
-        
-        [Space]
-        [Header("Player Movement")]
-        [ShowOnly] public Vector3 p_moveVelocity;
-        [ShowOnly] public bool p_isGrounded;
-        public LayerMask e_ground;
-        [ShowOnly] public float p_speed;
-        [ShowOnly] public float p_gravity;
+        [Title("Movement", "", TitleAlignments.Centered)]
+        [InfoBox("These settings are configured on the PlayerSettings Manager")]
+        [FoldoutGroup("Movement ShowOnly", expanded: true)] [ShowOnly] public Vector3 p_moveVelocity;
+        [FoldoutGroup("Movement ShowOnly", expanded: true)] [ShowOnly] public bool p_isGrounded;
+        [FoldoutGroup("Movement ShowOnly", expanded: true)] [ShowOnly] public LayerMask e_ground;
+        [FoldoutGroup("Movement ShowOnly", expanded: true)] [ShowOnly] public float p_speed;
+        [FoldoutGroup("Movement ShowOnly", expanded: true)] [ShowOnly] public float p_gravity;
 
-        [Space]
-        [Header("Jumping")]
-        [ShowOnly] public bool p_canDoubleJump;
-        [ShowOnly] public int p_jumpCount;
-        [ShowOnly] public int p_maxJumps;
+        [Title("Jumping", "", TitleAlignments.Centered)]
+        [InfoBox("These settings are configured on the PlayerSettings Manager")]
+        [FoldoutGroup("Jumping ShowOnly", expanded: true)] [ShowOnly] public bool p_canDoubleJump;
+        [FoldoutGroup("Jumping ShowOnly", expanded: true)] [ShowOnly] public int p_jumpCount;
+        [FoldoutGroup("Jumping ShowOnly", expanded: true)] [ShowOnly] public int p_maxJumps;
         //=-=-=-=-=-=-=\\
 
         //Hidden Variables\\
+        private CharacterActions ca;
+
         private float p_jumpHeight;
         private float p_groundedRayLength;
         private float c_speed;
@@ -46,6 +44,14 @@ namespace Averwotch.Player.Controller
         void Start()
         {
             p_controller = GetComponent<CharacterController>();
+
+            ca = new CharacterActions();
+
+            ca.left.AddDefaultBinding(Key.A);
+            ca.right.AddDefaultBinding(Key.D);
+            ca.forward.AddDefaultBinding(Key.W);
+            ca.backward.AddDefaultBinding(Key.S);
+            ca.jump.AddDefaultBinding(Key.Space);
         }
 
         void Update()
@@ -61,10 +67,6 @@ namespace Averwotch.Player.Controller
             c_main = PlayerSettings._playerCamera;
             c_speed = PlayerSettings._cameraSpeed;
             c_lookAt = PlayerSettings._playerForward;
-            pc_forward = PlayerSettings._forwardMove;
-            pc_backward = PlayerSettings._backwardMove;
-            pc_left = PlayerSettings._leftMove;
-            pc_right = PlayerSettings._rightMove;
 
             CheckGrounded();
             MovePlayer();
@@ -106,27 +108,27 @@ namespace Averwotch.Player.Controller
 
             Vector3 movement = Vector3.zero;
 
-            movement += transform.forward * Input.GetAxis("Vertical");
-            movement += transform.right * Input.GetAxis("Horizontal");
+            movement += transform.forward * -ca.moveFB;
+            movement += transform.right * ca.moveLR;
 
             p_controller.Move(movement.normalized * Time.deltaTime * p_speed);
 
-            if (movement != Vector3.zero)
+            /*if (movement != Vector3.zero)
             {
                 transform.position = movement;
-            }
+            }*/
 
             p_controller.Move(p_velocity * Time.deltaTime);
         }
 
         private void Jumping()
         {
-            if(Input.GetButtonDown("Jump") && p_isGrounded)
+            if(ca.jump.WasPressed && p_isGrounded)
             {
                 p_velocity.y += Mathf.Sqrt(p_jumpHeight * -3.0f * p_gravity);
                 p_jumpCount++;
             }
-            if (Input.GetButtonDown("Jump") && !p_isGrounded && p_canDoubleJump && p_jumpCount < p_maxJumps)
+            if (ca.jump.WasPressed && !p_isGrounded && p_canDoubleJump && p_jumpCount < p_maxJumps)
             {
                 p_jumpCount++;
                 p_velocity.y += Mathf.Sqrt(p_jumpHeight * -3.0f * p_gravity);
