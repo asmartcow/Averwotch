@@ -28,11 +28,15 @@ namespace Averwotch.Player.Inventory
 
         private void Start()
         {
-            inventory = new string[3];
         }
 
         private void Update()
         {
+            if (inventory.Length < 1)
+            {
+                inventory = new string[inventorySize];
+            }
+
             PlayerSettings._collidedWith = collidedWith;
             PlayerSettings._collidedTag = collidedTag;
             PlayerSettings._collided = collided;
@@ -44,7 +48,11 @@ namespace Averwotch.Player.Inventory
             GODestroy();
             Pickup();
             Drop();
-            ActiveWeapon();
+
+            if(inventory.Length >= 1)
+            {
+                ActiveWeapon();
+            }
         }
 
         private void GODestroy()

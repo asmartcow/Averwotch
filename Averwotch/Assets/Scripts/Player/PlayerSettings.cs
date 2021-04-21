@@ -7,51 +7,59 @@ namespace Averwotch.Player.Globals
 {
     public class PlayerSettings : MonoBehaviour
     {
-        //Local Public Variables\\
-        //Movement\\
+        //----------Local Public Variables----------\\
+        //-----Game Settings-----\\
+        //Inventory\\
         [Title("Inventory", "", TitleAlignments.Centered)]
         [FoldoutGroup("Game Settings", expanded: true)] public int invSize;
 
+        //Moving\\
         [Title("Moving", "", TitleAlignments.Centered)]
-        [FoldoutGroup("Player Movement Settings", expanded: true)] public float playerSpeed;
-        [FoldoutGroup("Player Movement Settings", expanded: true)] public float gravityConstant;
-        [FoldoutGroup("Player Movement Settings", expanded: true)] public float isGroundedRaycastLength;
+        [FoldoutGroup("Game Settings", expanded: true)] public float playerSpeed;
+        [FoldoutGroup("Game Settings", expanded: true)] public float gravityConstant;
 
         //Jumping\\
         [Title("Jumping", "", TitleAlignments.Centered)]
-        [FoldoutGroup("Player Movement Settings", expanded: true)] public bool canDoubleJump;
-        [FoldoutGroup("Player Movement Settings", expanded: true)] public int maxJumps;
-        [FoldoutGroup("Player Movement Settings", expanded: true)] public float jumpHeight;
-        [FoldoutGroup("Player Movement Settings", expanded: true)] public float smoothTime;
+        [FoldoutGroup("Game Settings", expanded: true)] public bool canDoubleJump;
+        [FoldoutGroup("Game Settings", expanded: true)] public int maxJumps;
+        [FoldoutGroup("Game Settings", expanded: true)] public float jumpHeight;
 
-        //Movement object references\\
-        [Title("Object References", "", TitleAlignments.Centered)]
-        [FoldoutGroup("Player Movement Settings", expanded: true)] public GameObject raycastStart;
-
+        //-----User Changeable Settings-----\\
         //Camera\\
         [Title("Variables", "", TitleAlignments.Centered)]
-        [FoldoutGroup("Player Camera settings", expanded: true)] public bool mouseLock;
-        [FoldoutGroup("Player Camera settings", expanded: true)] public float cameraSpeed;
-        [FoldoutGroup("Player Camera settings", expanded: true)] public float camClampMin;
-        [FoldoutGroup("Player Camera settings", expanded: true)] public float camClampMax;
+        [FoldoutGroup("User Changeable Settings", expanded: true)] public float cameraSpeed;
 
-        //Camera Object References\\
+        //-----Back End-----\\
+        //Camera\\
+        [Title("Camera", "", TitleAlignments.Centered)]
+        [FoldoutGroup("Back End Settings", expanded: true)] public bool mouseLock;
+        [FoldoutGroup("Back End Settings", expanded: true)] public float camClampMin;
+        [FoldoutGroup("Back End Settings", expanded: true)] public float camClampMax;
+
+        //Object References\\
         [Title("Object References", "", TitleAlignments.Centered)]
-        [FoldoutGroup("Player Camera settings", expanded: true)] public GameObject playerForwardLook;
-        [FoldoutGroup("Player Camera settings", expanded: true)] public GameObject mainCamera;
-        [FoldoutGroup("Player Camera settings", expanded: true)] public GameObject followObject;
+        [FoldoutGroup("Back End Settings", expanded: true)] public GameObject raycastStart;
+        [FoldoutGroup("Back End Settings", expanded: true)] public GameObject playerForwardLook;
+        [FoldoutGroup("Back End Settings", expanded: true)] public GameObject mainCamera;
+        [FoldoutGroup("Back End Settings", expanded: true)] public GameObject followObject;
 
-        //Layer Masks\\
+        //Raycasts\\
+        [Title("Raycast", "", TitleAlignments.Centered)]
+        [FoldoutGroup("Back End Settings", expanded: true)] public float isGroundedRaycastLength;
+
+        //Layers\\
         [Title("Layer Mask", "", TitleAlignments.Centered)]
-        [FoldoutGroup("Layer Mask settings", expanded: true)] public LayerMask groundLayer;
+        [FoldoutGroup("Back End Settings", expanded: true)] public LayerMask groundLayer;
 
-        //ShowOnly\\
+        //-----Show Only-----\\
+        //Animations\\
         [Title("Animations", "", TitleAlignments.Centered)]
         [FoldoutGroup("ShowOnly", expanded: true)] [ShowOnly] public bool isJumping;
         [FoldoutGroup("ShowOnly", expanded: true)] [ShowOnly] public bool isGrounded;
         [FoldoutGroup("ShowOnly", expanded: true)] [ShowOnly] public float moveX;
         [FoldoutGroup("ShowOnly", expanded: true)] [ShowOnly] public float moveZ;
 
+        //Collisions\\
         [Title("Collisions", "", TitleAlignments.Centered)]
         [FoldoutGroup("ShowOnly", expanded: true)] [ShowOnly] public bool destroyed;
         [FoldoutGroup("ShowOnly", expanded: true)] [ShowOnly] public bool drop;
@@ -59,11 +67,13 @@ namespace Averwotch.Player.Globals
         [FoldoutGroup("ShowOnly", expanded: true)] [ShowOnly] public string collidedWith;
         [FoldoutGroup("ShowOnly", expanded: true)] [ShowOnly] public string collidedTag;
 
-        [Title("GameObjects", "", TitleAlignments.Centered)]
+        //Object References\\
+        [Title("Object References", "", TitleAlignments.Centered)]
         [FoldoutGroup("ShowOnly", expanded: true)] [ShowOnly] public GameObject collided;
 
+        //Other\\
         [Title("Active Weapons", "", TitleAlignments.Centered)]
-        [FoldoutGroup("Usables", expanded: true)] [ShowOnly] public int activeWeapon;
+        [FoldoutGroup("ShowOnly", expanded: true)] [ShowOnly] public int activeWeapon;
         //-----------------\\
 
         //Set Global Usables\\
