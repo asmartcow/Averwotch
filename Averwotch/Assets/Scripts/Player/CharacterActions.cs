@@ -10,6 +10,11 @@ public class CharacterActions : PlayerActionSet
     public PlayerAction forward;
     public PlayerAction backward;
     public PlayerAction jump;
+    public PlayerAction use;
+    public PlayerAction drop;
+    public PlayerAction wep1;
+    public PlayerAction wep2;
+    public PlayerAction wep3;
     public PlayerOneAxisAction moveLR;
     public PlayerOneAxisAction moveFB;
 
@@ -20,6 +25,11 @@ public class CharacterActions : PlayerActionSet
         forward = CreatePlayerAction("Move Forward");
         backward = CreatePlayerAction("Move Backward");
         jump = CreatePlayerAction("Jump");
+        use = CreatePlayerAction("Use");
+        drop = CreatePlayerAction("Drop");
+        wep1 = CreatePlayerAction("Wep1");
+        wep2 = CreatePlayerAction("Wep2");
+        wep3 = CreatePlayerAction("Wep3");
         moveLR = CreateOneAxisPlayerAction(left, right);
         moveFB = CreateOneAxisPlayerAction(forward, backward);
     }
