@@ -19,6 +19,8 @@ namespace Averwotch.Player.Inventory
 
         [Title("Game Objects", "", TitleAlignments.Centered)]
         [FoldoutGroup("Variable Checks", expanded: true)] [ShowOnly] public GameObject collided;
+        [FoldoutGroup("Variable Checks", expanded: true)] [ShowOnly] public GameObject dropPos;
+        [FoldoutGroup("Variable Checks", expanded: true)] [ShowOnly] public GameObject rifle;
 
         [Title("Inventory", "", TitleAlignments.Centered)]
         [FoldoutGroup("Inventory Array", expanded: true)] [ShowOnly] public int inventorySize;
@@ -46,6 +48,8 @@ namespace Averwotch.Player.Inventory
             drop = PlayerSettings._drop;
             activeWeapon = PlayerSettings._activeWeapon;
             PlayerSettings._isWeaponActive = isWeaponActive;
+            rifle = PlayerSettings._rifle;
+            dropPos = PlayerSettings._dropPosition;
 
             GODestroy();
             Pickup();
@@ -108,7 +112,27 @@ namespace Averwotch.Player.Inventory
         {
             if (drop)
             {
+                if (activeWeapon == 0)
+                {
+                    CheckWeapon();
+                    inventory[0] = null;
+                }
+                if (activeWeapon == 1)
+                {
+                    inventory[1] = null;
+                }
+                if (activeWeapon == 2)
+                {
+                    inventory[2] = null;
+                }
+            }
+        }
 
+        private void CheckWeapon()
+        {
+            if (inventory[0] == "rifle")
+            {
+                Instantiate(rifle);
             }
         }
 

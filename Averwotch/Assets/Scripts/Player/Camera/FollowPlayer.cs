@@ -9,7 +9,7 @@ namespace Averwotch.Player.Camera
     {
 
         //Variables\\
-        private float smoothTime = .1f;
+        private float smoothTime = 0f;
 
         private Vector3 velocity = Vector3.zero;
 

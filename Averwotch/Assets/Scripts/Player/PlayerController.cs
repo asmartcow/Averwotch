@@ -100,6 +100,7 @@ namespace Averwotch.Player.Controller
             Jumping();
             Pickup();
             ActiveWeapon();
+            Drop();
         }
 
         private void CheckGrounded()
@@ -181,6 +182,10 @@ namespace Averwotch.Player.Controller
             if (ca.drop.WasPressed)
             {
                 PlayerSettings._drop = true;
+            }
+            else
+            {
+                PlayerSettings._drop = false;
             }
         }
 
