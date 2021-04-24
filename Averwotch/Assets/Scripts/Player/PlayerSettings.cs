@@ -35,6 +35,7 @@ namespace Averwotch.Player.Globals
         [FoldoutGroup("Back End Settings", expanded: true)] public bool mouseLock;
         [FoldoutGroup("Back End Settings", expanded: true)] public float camClampMin;
         [FoldoutGroup("Back End Settings", expanded: true)] public float camClampMax;
+        [FoldoutGroup("Back End Settings", expanded: true)] public float smoothTime;
 
         //Object References\\
         [Title("Object References", "", TitleAlignments.Centered)]
@@ -42,6 +43,8 @@ namespace Averwotch.Player.Globals
         [FoldoutGroup("Back End Settings", expanded: true)] public GameObject playerForwardLook;
         [FoldoutGroup("Back End Settings", expanded: true)] public GameObject mainCamera;
         [FoldoutGroup("Back End Settings", expanded: true)] public GameObject followObject;
+        [FoldoutGroup("Back End Settings", expanded: true)] public GameObject camOriginal;
+        [FoldoutGroup("Back End Settings", expanded: true)] public GameObject camWeaonOut;
 
         //Raycasts\\
         [Title("Raycast", "", TitleAlignments.Centered)]
@@ -74,6 +77,7 @@ namespace Averwotch.Player.Globals
         //Other\\
         [Title("Active Weapons", "", TitleAlignments.Centered)]
         [FoldoutGroup("ShowOnly", expanded: true)] [ShowOnly] public int activeWeapon;
+        [FoldoutGroup("ShowOnly", expanded: true)] [ShowOnly] public bool isWeaponActive;
         //-----------------\\
 
         //Set Global Usables\\
@@ -102,6 +106,7 @@ namespace Averwotch.Player.Globals
         public static bool _isGrounded { get; set; }
         public static bool _weaponPickup { get; set; }
         public static bool _drop { get; set; }
+        public static bool _isWeaponActive { get; set; }
 
         public static LayerMask _groundMask { get; set; }
 
@@ -110,6 +115,8 @@ namespace Averwotch.Player.Globals
         public static GameObject _isGroundedStart { get; set; }
         public static GameObject _followObject { get; set; }
         public static GameObject _collided { get; set; }
+        public static GameObject _camOriginal { get; set; }
+        public static GameObject _camWeaponOut { get; set; }
         //-----------------\\
 
         public void Update()
@@ -142,6 +149,9 @@ namespace Averwotch.Player.Globals
             isGrounded = _isGrounded;
             _invSize = invSize;
             activeWeapon = _activeWeapon;
+            _camWeaponOut = camWeaonOut;
+            _camOriginal = camOriginal;
+            isWeaponActive = _isWeaponActive;
         }
     }
 }

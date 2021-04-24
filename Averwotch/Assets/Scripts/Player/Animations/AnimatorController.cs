@@ -13,6 +13,9 @@ namespace Averwotch.Player.Animation
         [ShowOnly] public float moveZ;
         [ShowOnly] public bool isJumping;
         [ShowOnly] public bool isGrounded;
+        [ShowOnly] public float smoothTime = 0.3f;
+        [ShowOnly] public float yVelocity = 0.0f;
+        [ShowOnly] public bool weaponActive;
 
         public void Awake()
         {
@@ -25,11 +28,13 @@ namespace Averwotch.Player.Animation
             moveZ = PlayerSettings._moveZ;
             isJumping = PlayerSettings._isJumping;
             isGrounded = PlayerSettings._isGrounded;
+            weaponActive = PlayerSettings._isWeaponActive;
 
             anim.SetFloat("MoveX", moveX);
             anim.SetFloat("MoveZ", moveZ);
             anim.SetBool("isJumping", isJumping);
             anim.SetBool("isGrounded", isGrounded);
+            anim.SetBool("WeaponActive", weaponActive);
         }
     }
 }

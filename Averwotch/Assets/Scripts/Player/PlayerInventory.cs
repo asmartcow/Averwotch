@@ -13,6 +13,7 @@ namespace Averwotch.Player.Inventory
         [Title("Strings", "", TitleAlignments.Centered)]
         [FoldoutGroup("Variable Checks", expanded: true)] [ShowOnly] public bool destroyed;
         [FoldoutGroup("Variable Checks", expanded: true)] [ShowOnly] public bool drop;
+        [FoldoutGroup("Variable Checks", expanded: true)] [ShowOnly] public bool isWeaponActive;
         [FoldoutGroup("Variable Checks", expanded: true)] [ShowOnly] public string collidedWith;
         [FoldoutGroup("Variable Checks", expanded: true)] [ShowOnly] public string collidedTag;
 
@@ -44,6 +45,7 @@ namespace Averwotch.Player.Inventory
             inventorySize = PlayerSettings._invSize;
             drop = PlayerSettings._drop;
             activeWeapon = PlayerSettings._activeWeapon;
+            PlayerSettings._isWeaponActive = isWeaponActive;
 
             GODestroy();
             Pickup();
@@ -115,19 +117,23 @@ namespace Averwotch.Player.Inventory
             if (activeWeapon == 0)
             {
                 weapon = inventory[0];
+                isWeaponActive = true;
             }
             if (activeWeapon == 1)
             {
                 weapon = inventory[1];
+                isWeaponActive = true;
             }
             if (activeWeapon == 2)
             {
                 weapon = inventory[2];
+                isWeaponActive = true;
             }
 
             if (weapon == null)
             {
-
+                activeWeapon = -1;
+                isWeaponActive = false;
             }
         }
     }
