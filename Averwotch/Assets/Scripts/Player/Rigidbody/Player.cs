@@ -10,13 +10,18 @@ namespace Controllers.RB.Player
     {
         //Public Variables\\
         [FoldoutGroup("ShowOnly")][ShowInInspector][ReadOnly] private Rigidbody rb;
+        [FoldoutGroup("ShowOnly")] [ShowInInspector] [ReadOnly] private bool isGrounded;
+        [FoldoutGroup("ShowOnly")] [ShowInInspector] [ReadOnly] private bool isDoubleJump;
 
         [Title("Movement", "", TitleAlignments.Centered)]
         [FoldoutGroup("Variables")]public float speed;
+        [FoldoutGroup("Variables")] public float jumpHeight;
+        [FoldoutGroup("Variables")] public bool canDoubleJump;
         //\\
 
         //Private Variables\\
         private CharacterActions ca;
+        private Vector3 direction = Vector3.right;
         //\\
 
         private void Awake()
@@ -45,11 +50,62 @@ namespace Controllers.RB.Player
             Movement();
         }
 
+        private void Update()
+        {
+            direction = Camera.main.transform.forward;
+            IsGroundedCheck();
+            Raycast();
+            Jumping();
+        }
+
         private void Movement()
         {
-            Vector3 tempVector = new Vector3(ca.moveLR, 0, -ca.moveFB);
-            tempVector = tempVector.normalized * speed * Time.deltaTime;
-            rb.MovePosition(transform.localPosition + tempVector);
+            var currentRotation = rb.rotation;
+            var horizontalDirection = Vector3.ProjectOnPlane(direction, Vector3.up);
+            var targetRotation = Quaternion.LookRotation(horizontalDirection);
+            var newRotation = Quaternion.Slerp(currentRotation, targetRotation, 10f * Time.deltaTime);
+
+            var FBPos = transform.forward * -ca.moveFB;
+            var LRPos = transform.right * ca.moveLR;
+
+            var move = (FBPos + LRPos);
+
+            rb.MoveRotation(newRotation);
+            rb.MovePosition(rb.position + move.normalized * speed * Time.deltaTime);
+        }
+
+        private void Jumping()
+        {
+            if (ca.jump.WasPressed)
+            {
+                rb.AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Impulse);
+                if (ca.jump.WasPressed && isDoubleJump)
+                {
+                    rb.AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Impulse);
+                    isDoubleJump = false;
+                }
+            }
+        }
+
+        private void IsGroundedCheck()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, .15f))
+            {
+                isGrounded = true;
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 10f, Color.green);
+                isDoubleJump = canDoubleJump;
+            }
+            else
+            {
+                isGrounded = false;
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 10f, Color.red);
+            }
+        }
+
+        private void Raycast()
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 5f, Color.blue);
         }
     }
 }
