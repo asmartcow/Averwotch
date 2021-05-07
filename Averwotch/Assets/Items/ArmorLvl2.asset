@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5a355038243bb4abb0202118a8a1ed, type: 3}
   m_Name: ArmorLvl2
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 5850450390457806700, guid: 630c65d6641787742a43e6097e7e4172, type: 3}
   type: 1
   description: Armor level 2.
   armorBonus: 20

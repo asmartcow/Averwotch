@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fa56462577c9a042aa0b6a21d509a33, type: 3}
   m_Name: DefaultItem
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 3806369329400288569, guid: 4bfb3c86627add54abd88831190a80f4, type: 3}
   type: 2
   description: This is a default item.
