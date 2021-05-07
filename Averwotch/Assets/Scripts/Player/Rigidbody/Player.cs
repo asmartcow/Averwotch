@@ -9,14 +9,21 @@ namespace Controllers.RB.Player
     public class Player : MonoBehaviour
     {
         //Public Variables\\
-        [FoldoutGroup("ShowOnly")][ShowInInspector][ReadOnly] private Rigidbody rb;
+        [FoldoutGroup("ShowOnly")] [ShowInInspector] [ReadOnly] private Rigidbody rb;
         [FoldoutGroup("ShowOnly")] [ShowInInspector] [ReadOnly] private bool isGrounded;
         [FoldoutGroup("ShowOnly")] [ShowInInspector] [ReadOnly] private bool isDoubleJump;
 
         [Title("Movement", "", TitleAlignments.Centered)]
-        [FoldoutGroup("Variables")]public float speed;
+        [FoldoutGroup("Variables")] public LayerMask playerLayer;
+        [FoldoutGroup("Variables")] public float speed;
         [FoldoutGroup("Variables")] public float jumpHeight;
         [FoldoutGroup("Variables")] public bool canDoubleJump;
+
+        [Title("GameObjects", "", TitleAlignments.Centered)]
+        [FoldoutGroup("Variables")] public GameObject raycastObject;
+
+        [Title("List", "", TitleAlignments.Centered)]
+        [FoldoutGroup("Inventory")] public InventoryObject inventory;
         //\\
 
         //Private Variables\\
@@ -26,6 +33,8 @@ namespace Controllers.RB.Player
 
         private void Awake()
         {
+            //Debug.Log("Initializing...");
+
             //Initialize Rigidbody\\
             rb = GetComponent<Rigidbody>();
             //\\
@@ -43,6 +52,18 @@ namespace Controllers.RB.Player
             ca.wep2.AddDefaultBinding(Key.Key2);
             ca.wep3.AddDefaultBinding(Key.Key3);
             //\\
+        }
+
+        private void Start()
+        {
+            /*if(rb != null)
+            {
+                Debug.Log("Rigidbody Initialized...");
+            }
+            if(ca != null)
+            {
+                Debug.Log("Character controls Initialized...");
+            }*/
         }
 
         private void FixedUpdate()
@@ -76,36 +97,40 @@ namespace Controllers.RB.Player
 
         private void Jumping()
         {
-            if (ca.jump.WasPressed)
+            if (ca.jump.WasPressed && isGrounded)
             {
                 rb.AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Impulse);
-                if (ca.jump.WasPressed && isDoubleJump)
-                {
-                    rb.AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Impulse);
-                    isDoubleJump = false;
-                }
+            }
+            if (ca.jump.WasPressed && isDoubleJump && !isGrounded)
+            {
+                rb.AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Impulse);
+                isDoubleJump = false;
             }
         }
 
         private void IsGroundedCheck()
         {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, .15f))
+            if (Physics.Raycast(raycastObject.transform.position, transform.TransformDirection(Vector3.down), out RaycastHit hit, .15f, ~playerLayer))
             {
                 isGrounded = true;
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 10f, Color.green);
+                Debug.DrawRay(raycastObject.transform.position, transform.TransformDirection(Vector3.down) * 10f, Color.green);
                 isDoubleJump = canDoubleJump;
             }
             else
             {
                 isGrounded = false;
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 10f, Color.red);
+                Debug.DrawRay(raycastObject.transform.position, transform.TransformDirection(Vector3.down) * 10f, Color.red);
             }
         }
 
         private void Raycast()
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 5f, Color.blue);
+        }
+
+        public void OnTriggerEnter(Collider other)
+        {
+            var item = other.GetComponent<Item>()
         }
     }
 }
