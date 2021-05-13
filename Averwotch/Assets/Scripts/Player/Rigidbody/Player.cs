@@ -12,23 +12,33 @@ namespace Controllers.RB.Player
         [FoldoutGroup("ShowOnly")] [ShowInInspector] [ReadOnly] private Rigidbody rb;
         [FoldoutGroup("ShowOnly")] [ShowInInspector] [ReadOnly] private bool isGrounded;
         [FoldoutGroup("ShowOnly")] [ShowInInspector] [ReadOnly] private bool isDoubleJump;
+        [FoldoutGroup("ShowOnly")] [ShowInInspector] [ReadOnly] private bool canMove;
 
         [Title("Movement", "", TitleAlignments.Centered)]
         [FoldoutGroup("Variables")] public LayerMask playerLayer;
         [FoldoutGroup("Variables")] public float speed;
         [FoldoutGroup("Variables")] public float jumpHeight;
         [FoldoutGroup("Variables")] public bool canDoubleJump;
+        [FoldoutGroup("Variables")] public bool canMoveWhileJumping;
 
         [Title("GameObjects", "", TitleAlignments.Centered)]
         [FoldoutGroup("Variables")] public GameObject raycastObject;
 
-        [Title("List", "", TitleAlignments.Centered)]
-        [FoldoutGroup("Inventory")] public InventoryObject inventory;
+        [Title("Variables", "", TitleAlignments.Centered)]
+        [FoldoutGroup("Variables")] public int arraySize;
+
+        [Title("Inventory", "", TitleAlignments.Centered)]
+        [FoldoutGroup("Inventory")] public string[] Inventory;
+
+        //[Title("List", "", TitleAlignments.Centered)]
+        //[FoldoutGroup("Inventory")] public InventoryObject inventory;
         //\\
 
         //Private Variables\\
         private CharacterActions ca;
         private Vector3 direction = Vector3.right;
+        public Vector3 moveVelocity;
+        private string itemToStore;
         //\\
 
         private void Awake()
@@ -54,6 +64,12 @@ namespace Controllers.RB.Player
             ca.quicksave.AddDefaultBinding(Key.Escape);
             ca.quickload.AddDefaultBinding(Key.PadEnter);
             //\\
+
+            //Initialize Array Size\\
+            if(Inventory.Length != arraySize)
+            {
+                Inventory = new string[arraySize];
+            }
         }
 
         private void Start()
@@ -79,14 +95,14 @@ namespace Controllers.RB.Player
             IsGroundedCheck();
             Raycast();
             Jumping();
-            if (ca.quicksave.WasPressed)
+            /*if (ca.quicksave.WasPressed)
             {
                 inventory.Save();
             }
             if (ca.quickload.WasPressed)
             {
                 inventory.Load();
-            }
+            }*/
         }
 
         private void Movement()
@@ -101,8 +117,18 @@ namespace Controllers.RB.Player
 
             var move = (FBPos + LRPos);
 
-            rb.MoveRotation(newRotation);
-            rb.MovePosition(rb.position + move.normalized * speed * Time.deltaTime);
+            if (canMove)
+            {
+                rb.MoveRotation(newRotation);
+                rb.MovePosition(rb.position + move.normalized * speed * Time.deltaTime);
+                moveVelocity = move.normalized;
+            }
+
+            if (!isGrounded && !canMoveWhileJumping)
+            {
+                rb.MoveRotation(newRotation);
+                rb.MovePosition(rb.position + moveVelocity.normalized * speed * Time.deltaTime);
+            }
         }
 
         private void Jumping()
@@ -125,11 +151,21 @@ namespace Controllers.RB.Player
                 isGrounded = true;
                 Debug.DrawRay(raycastObject.transform.position, transform.TransformDirection(Vector3.down) * 10f, Color.green);
                 isDoubleJump = canDoubleJump;
+                canMove = true;
             }
             else
             {
                 isGrounded = false;
                 Debug.DrawRay(raycastObject.transform.position, transform.TransformDirection(Vector3.down) * 10f, Color.red);
+
+                if ( canMoveWhileJumping)
+                {
+                    canMove = true;
+                }
+                else
+                {
+                    canMove = false;
+                }
             }
         }
 
@@ -140,17 +176,32 @@ namespace Controllers.RB.Player
 
         public void OnTriggerEnter(Collider other)
         {
-            var item = other.GetComponent<Item>();
+            var item = other.GetComponent<GroundItem>();
             if (item)
             {
-                inventory.AddItem(item.item, 1);
-                Destroy(other.gameObject);
+                for (int i = 0; i < Inventory.Length; i++)
+                {
+                    if(i.ToString() != item.name)
+                    {
+                        if (Inventory[i] == null)
+                        {
+                            Inventory[i] = item.name;
+                            break;
+                        }
+                    }
+                }
             }
+
+            /*if (item)
+            {
+                inventory.AddItem(new Item ( item.item ), 1);
+                Destroy(other.gameObject);
+            }*/
         }
 
-        private void OnApplicationQuit()
+        public void DisplayPickup()
         {
-            //inventory.Container.Clear();
+            Debug.Log("Display Pickup...");
         }
     }
 }

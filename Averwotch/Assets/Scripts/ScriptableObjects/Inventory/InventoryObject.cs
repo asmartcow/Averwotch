@@ -7,7 +7,7 @@ using UnityEditor;
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 
-public class InventoryObject : ScriptableObject, ISerializationCallbackReceiver
+public class InventoryObject : ScriptableObject//ISerializationCallbackReceiver
 {
     public string savePath;
 
@@ -15,7 +15,7 @@ public class InventoryObject : ScriptableObject, ISerializationCallbackReceiver
 
     public Inventory Container;
 
-    public void AddItem(ItemObject _item, int _amount)
+    public void AddItem(Item _item, int _amount)
     {
         for (int i = 0; i < Container.Items.Count; i++)
         {
@@ -25,7 +25,7 @@ public class InventoryObject : ScriptableObject, ISerializationCallbackReceiver
                 return;
             }
         }
-        Container.Items.Add(new InventorySlot(database.GetID[_item], _item, _amount));
+        Container.Items.Add(new InventorySlot(_item.Id, _item, _amount));
     }
 
     public void Save()
@@ -48,7 +48,7 @@ public class InventoryObject : ScriptableObject, ISerializationCallbackReceiver
         }
     }
 
-    public void OnAfterDeserialize()
+    /*public void OnAfterDeserialize()
     {
         for (int i = 0; i < Container.Items.Count; i++) 
         {
@@ -62,7 +62,7 @@ public class InventoryObject : ScriptableObject, ISerializationCallbackReceiver
         {
             Container.Items[i].item = database.GetItem[Container.Items[i].ID];
         }
-    }
+    }*/
 }
 
 [System.Serializable]
@@ -75,10 +75,10 @@ public class Inventory
 public class InventorySlot
 {
     public int ID;
-    public ItemObject item;
+    public Item item;
     public int amount;
 
-    public InventorySlot(int _id, ItemObject _item, int _amount)
+    public InventorySlot(int _id, Item _item, int _amount)
     {
         ID = _id;
         item = _item;
