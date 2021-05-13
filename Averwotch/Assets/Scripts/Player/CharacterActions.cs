@@ -17,6 +17,8 @@ public class CharacterActions : PlayerActionSet
     public PlayerAction wep3;
     public PlayerOneAxisAction moveLR;
     public PlayerOneAxisAction moveFB;
+    public PlayerAction quicksave;
+    public PlayerAction quickload;
 
     public CharacterActions()
     {
@@ -32,5 +34,7 @@ public class CharacterActions : PlayerActionSet
         wep3 = CreatePlayerAction("Wep3");
         moveLR = CreateOneAxisPlayerAction(left, right);
         moveFB = CreateOneAxisPlayerAction(forward, backward);
+        quicksave = CreatePlayerAction("Quick Save");
+        quickload = CreatePlayerAction("Quick Load");
     }
 }

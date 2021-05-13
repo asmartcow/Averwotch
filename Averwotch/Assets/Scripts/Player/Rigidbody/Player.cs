@@ -51,6 +51,8 @@ namespace Controllers.RB.Player
             ca.wep1.AddDefaultBinding(Key.Key1);
             ca.wep2.AddDefaultBinding(Key.Key2);
             ca.wep3.AddDefaultBinding(Key.Key3);
+            ca.quicksave.AddDefaultBinding(Key.Escape);
+            ca.quickload.AddDefaultBinding(Key.PadEnter);
             //\\
         }
 
@@ -77,6 +79,14 @@ namespace Controllers.RB.Player
             IsGroundedCheck();
             Raycast();
             Jumping();
+            if (ca.quicksave.WasPressed)
+            {
+                inventory.Save();
+            }
+            if (ca.quickload.WasPressed)
+            {
+                inventory.Load();
+            }
         }
 
         private void Movement()
@@ -140,7 +150,7 @@ namespace Controllers.RB.Player
 
         private void OnApplicationQuit()
         {
-            inventory.Container.Clear();
+            //inventory.Container.Clear();
         }
     }
 }

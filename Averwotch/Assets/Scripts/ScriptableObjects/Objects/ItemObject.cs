@@ -12,7 +12,8 @@ public enum ItemType
 
 public abstract class ItemObject : ScriptableObject
 {
-    public GameObject prefab;
+    public int Id;
+    public Sprite uiDisplay;
     public ItemType type;
     [TextArea(15,20)] public string description;
 }
