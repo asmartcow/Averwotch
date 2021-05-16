@@ -5,13 +5,22 @@ using Sirenix.OdinInspector;
 
 public class LockMouse : MonoBehaviour
 {
-    [ShowInInspector] [ReadOnly] private bool mouseLocked;
+    [ShowInInspector] public bool lockMouse;
 
     void Update()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        MouseLock();
+    }
 
-        if(Cursor.lockState == CursorLockMode.Locked) { mouseLocked = true; }
-        else { mouseLocked = false; }
+    public void MouseLock()
+    {
+        if (lockMouse)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        if (!lockMouse)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 }

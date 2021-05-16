@@ -19,6 +19,8 @@ public class CharacterActions : PlayerActionSet
     public PlayerOneAxisAction moveFB;
     public PlayerAction quicksave;
     public PlayerAction quickload;
+    public PlayerAction nextWeapon;
+    public PlayerAction prevWeapon;
 
     public CharacterActions()
     {
@@ -36,5 +38,7 @@ public class CharacterActions : PlayerActionSet
         moveFB = CreateOneAxisPlayerAction(forward, backward);
         quicksave = CreatePlayerAction("Quick Save");
         quickload = CreatePlayerAction("Quick Load");
+        nextWeapon = CreatePlayerAction("Next Weapon");
+        prevWeapon = CreatePlayerAction("Previous Weapon");
     }
 }

@@ -4,7 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Weapon
+  - Pistol
+  - Knife
+  - Assault Rifle
+  - Sniper Rifle
+  - Shotgun
+  - Rocket Launcher
+  - Machine Gun
   layers:
   - Default
   - TransparentFX
