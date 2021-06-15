@@ -11,6 +11,7 @@ TagManager:
   - Shotgun
   - Rocket Launcher
   - Machine Gun
+  - Weapon
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - Weapon
   - 
   - 
   - 

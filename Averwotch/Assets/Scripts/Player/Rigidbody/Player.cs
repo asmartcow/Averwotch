@@ -16,6 +16,7 @@ namespace Controllers.RB.Player
 
         [Title("Movement", "", TitleAlignments.Centered)]
         [FoldoutGroup("Variables")] public LayerMask playerLayer;
+        [FoldoutGroup("Variables")] public float turnSpeed;
         [FoldoutGroup("Variables")] public float speed;
         [FoldoutGroup("Variables")] public float jumpSpeedMultiplier;
         [FoldoutGroup("Variables")] public float jumpHeight;
@@ -75,7 +76,7 @@ namespace Controllers.RB.Player
             var currentRotation = rb.rotation;
             var horizontalDirection = Vector3.ProjectOnPlane(direction, Vector3.up);
             var targetRotation = Quaternion.LookRotation(horizontalDirection);
-            var newRotation = Quaternion.Slerp(currentRotation, targetRotation, 10f * Time.deltaTime);
+            var newRotation = Quaternion.Slerp(currentRotation, targetRotation, turnSpeed * Time.deltaTime);
 
             var FBPos = transform.forward * -ca.moveFB;
             var LRPos = transform.right * ca.moveLR;
