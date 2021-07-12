@@ -4,33 +4,51 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Pistol
-  - Knife
-  - Assault Rifle
-  - Sniper Rifle
-  - Shotgun
-  - Rocket Launcher
-  - Machine Gun
+  - Action
+  - AutoCrouch
+  - Ragdoll
+  - Ignore Ragdoll
+  - Boss
+  - Enemy
+  - CompanionAI
   - Weapon
+  - LookAt
+  - Dirt
+  - Wood
+  - Metal
+  - Concrete
+  - Glass
+  - Water
+  - LadderTrigger
+  - ExitWater
+  - Barrel
+  - FreeClimb
+  - ClimbDirection
+  - Zipline
+  - PlayerUI
+  - Collectable
+  - CoverPoint
+  - Interactable
+  - AIAction
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Walkable
+  - 
   - Water
   - UI
+  - 
+  - 
   - Player
-  - Weapon
+  - Enemy
+  - CompanionAI
+  - Triggers
+  - StopMove
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - HeadTrack
+  - BodyPart
+  - BlockAIRayCast
+  - Pushable
   - 
   - 
   - 
